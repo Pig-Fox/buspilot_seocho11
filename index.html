@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>BusPilot Seocho11</title>
 
 <link rel="stylesheet"
-href="https://unpkg.com/leaflet/dist/leaflet.css">
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -15,26 +16,37 @@ href="https://unpkg.com/leaflet/dist/leaflet.css">
 <body>
 
 <div id="header">
-서초11 운행중
+    서초11 운행중
 </div>
 
 <div id="map"></div>
 
 <div id="info">
 
-<div id="speed">
-속도 : -
+    <div id="speed">
+        속도 : 계산중...
+    </div>
+
+    <br>
+
+    <div id="nextStop">
+        가까운 정류장 계산중...
+    </div>
+
+    <br>
+
+    <div id="distance">
+        거리 계산중...
+    </div>
+
 </div>
 
-<div id="nextStop">
-다음 정류장 :
-</div>
-
-</div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script
+src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
