@@ -1,7 +1,7 @@
 const map = L.map('map').setView([37.490, 127.022], 14);
 
 L.tileLayer(
-‘https://tile.openstreetmap.org/{z}/{x}/{y}.png’,
+'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
 {
 maxZoom: 20
 }
@@ -10,7 +10,7 @@ maxZoom: 20
 let gpsMarker;
 let stops = [];
 
-fetch(‘stops.json’)
+fetch('stops.json')
 .then(response => response.json())
 .then(data => {
 
@@ -123,7 +123,7 @@ function(error){
 
 );
 
-map.on(‘click’, function(e){
+map.on('click', function(e){
 
 const lat = e.latlng.lat.toFixed(6);
 const lng = e.latlng.lng.toFixed(6);
