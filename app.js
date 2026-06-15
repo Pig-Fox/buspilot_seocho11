@@ -10,7 +10,7 @@ maxZoom: 20
 let gpsMarker;
 let stops = [];
 
-fetch(“stops.json”)
+fetch(‘stops.json’)
 .then(response => response.json())
 .then(data => {
 
@@ -25,19 +25,17 @@ stops.forEach(stop => {
     )
     .addTo(map)
     .bindPopup(
-        `
-        <b>${stop.name}</b><br>
-        순번 : ${stop.seq || "-"}<br>
-        위도 : ${stop.lat}<br>
-        경도 : ${stop.lng}
-        `
+        '<b>' + stop.name + '</b><br>' +
+        '순번 : ' + (stop.seq || '-') + '<br>' +
+        '위도 : ' + stop.lat + '<br>' +
+        '경도 : ' + stop.lng
     );
 });
 
 })
 .catch(error => {
 
-console.log("stops.json 로딩 오류", error);
+console.log('stops.json 로딩 오류', error);
 
 });
 
@@ -50,7 +48,8 @@ const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(lat1 * Math.PI / 180) *
     Math.cos(lat2 * Math.PI / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
 const c =
     2 *
     Math.atan2(
@@ -69,15 +68,17 @@ function(position){
     if(gpsMarker){
         gpsMarker.setLatLng([lat, lng]);
     }else{
-        gpsMarker = L.marker([lat, lng])
-        .addTo(map);
+        gpsMarker = L.marker([lat, lng]).addTo(map);
     }
     const speed =
         Math.round(
             (position.coords.speed || 0) * 3.6
         );
-    document.getElementById("speed").innerHTML =
-        "속도 : " + speed + " km/h";
+    const speedDiv = document.getElementById('speed');
+    if(speedDiv){
+        speedDiv.innerHTML =
+            '속도 : ' + speed + ' km/h';
+    }
     let nearestStop = null;
     let nearestDistance = 999999;
     stops.forEach(stop => {
@@ -94,13 +95,21 @@ function(position){
         }
     });
     if(nearestStop){
-        document.getElementById("nextStop").innerHTML =
-            "가까운 정류장 : " +
-            nearestStop.name;
-        document.getElementById("distance").innerHTML =
-            "거리 : " +
-            Math.round(nearestDistance) +
-            "m";
+        const nextStopDiv =
+            document.getElementById('nextStop');
+        if(nextStopDiv){
+            nextStopDiv.innerHTML =
+                '가까운 정류장 : ' +
+                nearestStop.name;
+        }
+        const distanceDiv =
+            document.getElementById('distance');
+        if(distanceDiv){
+            distanceDiv.innerHTML =
+                '거리 : ' +
+                Math.round(nearestDistance) +
+                'm';
+        }
     }
 },
 function(error){
@@ -121,19 +130,12 @@ const lng = e.latlng.lng.toFixed(6);
 L.popup()
     .setLatLng(e.latlng)
     .setContent(
-        `
-        <b>좌표 추출 모드</b>
-        <br><br>
-        위도 : ${lat}
-        <br>
-        경도 : ${lng}
-        <br><br>
-        stops.json 입력용
-        <br><br>
-        "lat": ${lat},
-        <br>
-        "lng": ${lng}
-        `
+        '<b>좌표 추출 모드</b><br><br>' +
+        '위도 : ' + lat + '<br>' +
+        '경도 : ' + lng + '<br><br>' +
+        'stops.json 입력용<br><br>' +
+        '"lat": ' + lat + ',<br>' +
+        '"lng": ' + lng
     )
     .openOn(map);
 
