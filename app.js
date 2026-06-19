@@ -1,3 +1,4 @@
+alert("app.js 시작");
 const map = L.map('map').setView([37.490, 127.022], 14);
 
 L.tileLayer(
