@@ -19,54 +19,96 @@ let currentDirection = “상행”;
 // 정류장 로드
 // =========================
 
-fetch(‘stops.json’)
-.then(response => response.json())
+// =========================
+// 정류장 로드
+// =========================
+
+fetch('./stops.json')
+
+.then(response => {
+
+    console.log('stops.json 상태:', response.status);
+
+    if(!response.ok){
+
+        throw new Error(
+            'stops.json 로드 실패 : ' +
+            response.status
+        );
+
+    }
+
+    return response.json();
+
+})
+
 .then(data => {
 
-upStops = data.upbound || [];
-downStops = data.downbound || [];
-allStops = [
-    ...upStops,
-    ...downStops
-];
-// 상행 마커
-upStops.forEach(stop => {
-    L.circleMarker(
-        [stop.lat, stop.lng],
-        {
-            radius: 7,
-            color: 'blue',
-            weight: 2
-        }
-    )
-    .addTo(map)
-    .bindPopup(
-        '<b>[상행]</b><br>' +
-        stop.name
+    console.log('정류장 데이터:', data);
+
+    alert(
+        '상행 ' +
+        data.upbound.length +
+        '개 / 하행 ' +
+        data.downbound.length +
+        '개 로드 성공'
     );
-});
-// 하행 마커
-downStops.forEach(stop => {
-    L.circleMarker(
-        [stop.lat, stop.lng],
-        {
-            radius: 7,
-            color: 'red',
-            weight: 2
-        }
-    )
-    .addTo(map)
-    .bindPopup(
-        '<b>[하행]</b><br>' +
-        stop.name
-    );
-});
+
+    upStops = data.upbound || [];
+    downStops = data.downbound || [];
+
+    allStops = [
+        ...upStops,
+        ...downStops
+    ];
+
+    // 상행 마커
+    upStops.forEach(stop => {
+
+        L.circleMarker(
+            [stop.lat, stop.lng],
+            {
+                radius: 7,
+                color: 'blue',
+                weight: 2
+            }
+        )
+        .addTo(map)
+        .bindPopup(
+            '<b>[상행]</b><br>' +
+            stop.name
+        );
+
+    });
+
+    // 하행 마커
+    downStops.forEach(stop => {
+
+        L.circleMarker(
+            [stop.lat, stop.lng],
+            {
+                radius: 7,
+                color: 'red',
+                weight: 2
+            }
+        )
+        .addTo(map)
+        .bindPopup(
+            '<b>[하행]</b><br>' +
+            stop.name
+        );
+
+    });
 
 })
 .catch(error => {
 
-console.log('stops.json 로딩 오류');
-console.log(error);
+    alert(
+        'stops.json 오류 발생\n\n' +
+        error.message
+    );
+
+    console.log(error);
 
 });
 
